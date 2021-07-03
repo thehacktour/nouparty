@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework.view import APIView
+from rest_framework.response import Response
 
-# Create your views here.
+from .models import UserModel
+from .serializer import UserSerializer
+
+class UserEndPoint(APIView):
+
+    def get(self, request):
+        user = UserModel.objects.all()
+        serializer = UserSerializer(user,many=True)
+        return Response(serializer.data)
